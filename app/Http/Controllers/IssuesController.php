@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Imports\IssuesImport;
 use App\Issue;
-use App\mail\IssueRequestSubmitted;
+use App\Mail\IsseRequestSubmitted;
+use App\User;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Auth;
-use App\user;
 
 class IssuesController extends Controller
 {
@@ -41,5 +43,19 @@ class IssuesController extends Controller
 
     public function test(){
         return "this is a test function";
+    }
+
+    public function importFromExcel(Request $request)
+    {
+
+
+        //Validate file
+        $request->validate([
+            'excelFile'=> 'required|mimes:xlsx'
+        ]); 
+
+        Excel::import(new IssuesImport, $request->excelFile);
+
+        return "Data imported successfully";
     }
 }

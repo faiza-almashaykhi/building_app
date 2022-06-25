@@ -28,3 +28,5 @@ Route::view('services', 'services');
 
 Route::get('issues/list', 'IssuesController@list');
 Route::get('users', 'usersController@export');
+Route::post('issues/import', 'IssuesController@importFromExcel');
+Route::view('issue-form', 'excel-import');
